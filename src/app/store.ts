@@ -29,3 +29,9 @@ export const useStore = create<IState>()((set) => ({
   setToken: (token) => set((state) => ({ ...state, token })),
   setAccount: (account) => set((state) => ({ ...state, account })),
 }));
+
+export const usePayment = create((set) => ({
+  isOpen: false,
+  onOpen: () => set({ isOpen: true }),
+  onClose: () => set({ isOpen: false }),
+}));

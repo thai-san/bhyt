@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { Box, Button, Typography, Grid, Modal, IconButton } from "@mui/material";
 import { DataGrid, GridColDef, GridRowParams } from "@mui/x-data-grid";
 import { Close } from "@mui/icons-material";
-import { useStore } from "../app/store";
+import { useStore, usePayment } from "../app/store";
+import Payment from "./Payment";
 
 const columns: GridColDef[] = [
   {
@@ -43,6 +44,7 @@ interface IPaymentRequestsDetails {
 
 function PaymentRequests(): JSX.Element {
   const account = useStore((state) => state.account);
+  const payment = usePayment();
   const [open, setOpen] = useState(false);
   const [insurancePayment, setInsurancePayment] = useState<IPaymentRequestsDetails[]>([]);
   const [customerPolicy, setCustomerPolicy] = useState<any>(null);
@@ -175,12 +177,13 @@ function PaymentRequests(): JSX.Element {
         </Modal>
         {!selectedRow?.status && (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-            <Button variant="contained" sx={{ width: "20%", bgcolor: "#FFCF63" }} onClick={() => void handlePayment()}>
+            <Button variant="contained" sx={{ width: "20%", bgcolor: "#FFCF63" }} onClick={() => payment.onOpen()}>
               Thanh Toán
             </Button>
           </Box>
         )}
       </Box>
+      <Payment />
     </Box>
   );
 }
